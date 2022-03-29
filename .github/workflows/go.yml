@@ -23,3 +23,15 @@ jobs:
 
     - name: Test
       run: go test -v ./...
+      
+    - name: Login do DockerHub
+      uses: docker/login-action@v1
+      with: 
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build and Push
+      id: docker_build
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        tags: riwandylbs/echo-go-git_app:latest
